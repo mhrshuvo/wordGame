@@ -1,0 +1,25 @@
+input{
+    height: 40px;
+    width: 40px;
+    background-color: #964B00;
+    /* color: #FFF; */
+    outline: none;
+    border: none;
+    font-size: 25px;
+    text-align: center;
+    text-transform: uppercase;
+}
+table{
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+.center{
+    text-align: center;
+}
+.red{
+
+    color: red;
+}
+.black{
+    color: black;
+}
