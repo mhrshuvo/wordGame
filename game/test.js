@@ -29,6 +29,7 @@ table.onkeyup = (e)=>{
     let charCode = e.keyCode;
     if (charCode > 31 && (charCode < 65 || charCode > 90)) 
     {
+        console.log(charCode)
         alert("Enter letters only.");
         element.value = element.defaultValue;
         
@@ -114,8 +115,7 @@ function valueOfRowCol(customArr,id){
             ColValues.push(customArr[i][col]);
         }
          console.log(ColValues);
-        //  findWord(RowValues);
-        //  findWord(ColValues);
+     
 
         splitArray(RowValues);
         splitArray(ColValues);
@@ -141,20 +141,37 @@ function splitArray(arr){
     
     console.log(result)
 
-    for(let i = 0 ;i < result.length; i++){
-        // console.log(result[i]);
-        // console.log([...result[i]].reverse());
-        findWord(result[i]);
-        findWord([...result[i]].reverse());
+    for(let i = 0 ; i<result.length ;i++){
+        subString(result[i],result[i].length)
     }
+    // findWord(result[0]);
+    // findWord([...result[0]].reverse());
+     
 }
 
+function subString(str,n)
+	{
+	    var ouputSize = (n*(n-1))/2,c = -1;
+        var outputArray = new Array(ouputSize);
+		for(let i = 0;i < n;i++){
+            for(let j = i+1;j <= n-1;j++){
+                outputArray[++c] = new Array(j-i+1);
+                var c2 = -1;
+                for(let k = i;k <= j;k++){
+                    outputArray[c][++c2] = str[k];
+                }
+            }
+        }
+        console.log(outputArray);
+		// 
+        for(let i = 0 ; i<outputArray.length ;i++){
+            findWord(outputArray[i]);
+        }
+	}
 
-// Finding and extracting words
+
+// // Finding and extracting words
 function findWord( letters ) {
-
-
-    console.log(letters.length);
 
     word =  '';
     let checkAllBlankorNot = letters.every((item)=>{
@@ -221,6 +238,7 @@ function findWord( letters ) {
    
 
 }
+
 
 
 
