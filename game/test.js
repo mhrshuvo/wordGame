@@ -1,4 +1,5 @@
 let table = document.getElementById('table-box');
+let UWord = document.getElementById('usedWord')
 let rows = 8;
 let col = 8;
 var arr = [[],[],[],[],[],[],[],[]];
@@ -29,13 +30,13 @@ table.onkeyup = (e)=>{
     let charCode = e.keyCode;
     if (charCode > 31 && (charCode < 65 || charCode > 90)) 
     {
-        console.log(charCode)
+        // console.log(charCode)
         alert("Enter letters only.");
         element.value = element.defaultValue;
         
     }else{
        if(keyPressNumber%2 == 0){
-            element.style.color = "red";
+            element.style.color = "black" ;
             
             if(player1Array.includes(charCode)){
                 alert("Can't enter same letter");
@@ -43,27 +44,27 @@ table.onkeyup = (e)=>{
                
             }
             else{
-                console.log(e.keyCode);
+                // console.log(e.keyCode);
                 keyPressNumber++;
                 element.blur();
                 element.disabled=true;
-                console.log(element.value)
+                // console.log(element.value)
                 player1Array.push(charCode);
             }
        }
        else{
-            element.style.color = "black";
+            element.style.color = "red";
             if(player2Array.includes(charCode)){
                 alert("Can't enter same letter");
                 element.value = element.defaultValue;
             }
             
             else{
-                console.log(e.keyCode);
+                // console.log(e.keyCode);
                 keyPressNumber++
                 element.blur();
                 element.disabled=true;
-                console.log(element.value);
+                // console.log(element.value);
                 player2Array.push(charCode);
             }
        }
@@ -110,11 +111,11 @@ function valueOfRowCol(customArr,id){
         for (let i = 0; i < customArr.length; i++) {
             RowValues.push(customArr[row][i]);
         }
-        console.log(RowValues);
+        // console.log(RowValues);
         for (let i = 0; i < customArr.length; i++) {
             ColValues.push(customArr[i][col]);
         }
-         console.log(ColValues);
+        //  console.log(ColValues);
      
 
         splitArray(RowValues);
@@ -139,11 +140,17 @@ function splitArray(arr){
     if (temp.length != 0) result.push(temp);
     
     
-    console.log(result)
+  
 
     for(let i = 0 ; i<result.length ;i++){
         subString(result[i],result[i].length)
+        subString([...result[i]].reverse(),[...result[i]].reverse().length)
     }
+   
+    // 
+    // for(let i = 0 ; i<result.length ;i++){
+    //   
+    // }
     // findWord(result[0]);
     // findWord([...result[0]].reverse());
      
@@ -162,7 +169,7 @@ function subString(str,n)
                 }
             }
         }
-        console.log(outputArray);
+        // console.log(outputArray);
 		// 
         for(let i = 0 ; i<outputArray.length ;i++){
             findWord(outputArray[i]);
@@ -192,8 +199,8 @@ function findWord( letters ) {
         
     }
     
-    console.log(word.trim());
-    console.log(`word length ${word.trim().length}`);  
+    // console.log(word.trim());
+    // console.log(`word length ${word.trim().length}`);  
     if(word.trim().length == 0){
         word = '';
     }
@@ -224,7 +231,7 @@ function findWord( letters ) {
 
         } else {
             status = '"' + newWord + "' IS NOT in the dictionary.";
-            console.log(`keyPressNumber ${keyPressNumber}`);
+            // console.log(`keyPressNumber ${keyPressNumber}`);
         }
     } catch ( e ) {
         status = "Error. Have you encoded the dictionary yet?";
@@ -232,9 +239,11 @@ function findWord( letters ) {
 
     }
   
-    console.log(status);
+    // console.log(status);
 
     console.log(`used word ${UsedWord}`);
+
+    UWord.innerHTML = UsedWord;
    
 
 }
