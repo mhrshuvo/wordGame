@@ -241,10 +241,10 @@ function findWord( letters ) {
                 UsedWord.push(newWord)
                 if(keyPressNumber%2 == 1){
                     p2score=p2score+3;
-                    ptwords.push(newWord);
+                    powords.push(newWord);
                     document.getElementById("p1score").innerHTML = p2score;
                 }else{
-                    powords.push(newWord);
+                    ptwords.push(newWord);
                     p1score=p1score+3;
                     document.getElementById("p2score").innerHTML = p1score;
                 
