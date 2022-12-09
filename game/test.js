@@ -1,9 +1,12 @@
 let table = document.getElementById('table-box');
-let UWord = document.getElementById('usedWord')
+let POUWord = document.getElementById('POusedWord')
+let PTUWord = document.getElementById('PTusedWord')
 let rows = 8;
 let col = 8;
 var arr = [[],[],[],[],[],[],[],[]];
 let UsedWord = [];
+let powords = [];
+let ptwords = []
 let keyPressNumber = 2;
 
 let p1score=0;
@@ -25,10 +28,25 @@ for (let i = 0; i < rows; i++) {
 let player1Array = [];
 let player2Array = [];
 
+
+// table.onkeyup = (e)=>{
+
+//     let letter = e.target.value;
+//     console.log(letter.charCodeAt(letter[letter.length - 1]))
+//     //text.charCodeAt(text[text.length - 1]);
+// }
+
+
 table.onkeyup = (e)=>{
-    let element  = document.getElementById(e.target.id)
-    let charCode = e.keyCode;
-    if (charCode > 31 && (charCode < 65 || charCode > 90)) 
+
+     let element  = document.getElementById(e.target.id)
+     let letter = e.target.value;
+     let charCode = letter.charCodeAt(letter[letter.length - 1]);
+    
+    // let charCode = e.target.value.charAt(e.target.selectionStart - 1).charCodeAt()
+    console.log(charCode)
+    console.log(e.target.value)
+    if (charCode > 31 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122)) 
     {
         // console.log(charCode)
         alert("Enter letters only.");
@@ -78,7 +96,8 @@ table.onkeyup = (e)=>{
             arr[i]=[];
             for (let j = 0; j < arr.length; j++) {
                 
-                arr[i].push(document.getElementById(`${i}${j}`).value);
+               
+                arr[i].push(document.getElementById(`${i}${j}`).value.toLowerCase());
                
             }
         }
@@ -222,8 +241,10 @@ function findWord( letters ) {
                 UsedWord.push(newWord)
                 if(keyPressNumber%2 == 1){
                     p2score=p2score+3;
+                    ptwords.push(newWord);
                     document.getElementById("p1score").innerHTML = p2score;
                 }else{
+                    powords.push(newWord);
                     p1score=p1score+3;
                     document.getElementById("p2score").innerHTML = p1score;
                 
@@ -243,7 +264,8 @@ function findWord( letters ) {
 
     console.log(`used word ${UsedWord}`);
 
-    UWord.innerHTML = UsedWord;
+    POUWord.innerHTML = powords;
+    PTUWord.innerHTML = ptwords;
    
 
 }
