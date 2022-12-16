@@ -12,6 +12,8 @@ let keyPressNumber = 2;
 let p1score=0;
 let p2score=0;
 
+let timeLimit 
+
 
 for (let i = 0; i < rows; i++) {
 
@@ -28,31 +30,40 @@ for (let i = 0; i < rows; i++) {
 let player1Array = [];
 let player2Array = [];
 
-
-// table.onkeyup = (e)=>{
-
-//     let letter = e.target.value;
-//     console.log(letter.charCodeAt(letter[letter.length - 1]))
-//     //text.charCodeAt(text[text.length - 1]);
-// }
+table.onkeydown = (e)=>{
+    clearTimeout(timeLimit)
+}
 
 
 table.onkeyup = (e)=>{
-
+    
      let element  = document.getElementById(e.target.id)
      let letter = e.target.value;
      let charCode = letter.charCodeAt(letter[letter.length - 1]);
     
-    // let charCode = e.target.value.charAt(e.target.selectionStart - 1).charCodeAt()
-    console.log(charCode)
-    console.log(e.target.value)
+    
     if (charCode > 31 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122)) 
     {
-        // console.log(charCode)
         alert("Enter letters only.");
         element.value = element.defaultValue;
         
     }else{
+        clearTimeout(timeLimit)
+      
+        
+        if(player1Array.length == 26 || player2Array.length == 26){
+            if(p1score>p2score){
+                alert(`🎉🏆🎉Second Player Won 🎉🏆🎉 \n Player 1 : ${p2score}, Player 2 : ${p1score}`) 
+            }
+            else if(p1score == p2score){
+                alert(`🎉🏆🎉Draw 🎉🏆🎉 \n Player 1 : ${p2score}, Player 2 : ${p1score}`)
+            }
+            else{
+                alert(`🎉🏆🎉First Player Won 🎉🏆🎉 \n Player 1 : ${p2score}, Player 2 : ${p1score}`) 
+            }
+            location.reload();
+        }
+       
        if(keyPressNumber%2 == 0){
             element.style.color = "black" ;
             
@@ -62,12 +73,15 @@ table.onkeyup = (e)=>{
                
             }
             else{
-                // console.log(e.keyCode);
+                
+               
+                player1Array.push(charCode);
                 keyPressNumber++;
+                
                 element.blur();
                 element.disabled=true;
-                // console.log(element.value)
-                player1Array.push(charCode);
+
+               
             }
        }
        else{
@@ -78,35 +92,55 @@ table.onkeyup = (e)=>{
             }
             
             else{
-                // console.log(e.keyCode);
+                player2Array.push(charCode);
                 keyPressNumber++
+                
                 element.blur();
                 element.disabled=true;
-                // console.log(element.value);
-                player2Array.push(charCode);
+                
+               
+               
             }
        }
-       if(player1Array.length >= 27 || player2Array.length >= 27){
-        alert("game Over");
-        location.reload();
-       }
-        // console.log(player1Array);
-        // console.log(player2Array);
+
+        timeLimit = setTimeout(() =>{
+                 
+           
+            if(keyPressNumber%2 == 1){
+               
+                if (confirm("Second Player's Time Out, Want To Continue?") == true) {
+                    alert("Second player miss the chance \n First Player's Turn")
+                    keyPressNumber++
+                } 
+                else{
+                    alert(`Second Player Quit \n🎉🏆🎉First Player Won 🎉🏆🎉 \n Score : ${p2score} `)  
+                    location.reload();
+                }
+            }
+            else{
+                if (confirm("First Player's Time Out, Want To Continue?") == true) {
+                    alert("First player miss the chance \n Second Player's Turn")
+                    keyPressNumber++
+                } 
+                else{
+                    alert(`First Player Quit \n🎉🏆🎉Second Player Won 🎉🏆🎉 \n Score : ${p1score} `)  
+                    location.reload();
+                }
+               
+            }
+           
+        }, 5000);
+
         for(let i = 0 ;i < arr.length; i++){
             arr[i]=[];
             for (let j = 0; j < arr.length; j++) {
-                
-               
                 arr[i].push(document.getElementById(`${i}${j}`).value.toLowerCase());
-               
             }
         }
-        // console.log(arr);
-        // console.log((e.target.id));
+        
         valueOfRowCol(arr,e.target.id);
     }
 
-   
 }
 
 
@@ -124,9 +158,6 @@ function valueOfRowCol(customArr,id){
     let spletedID = id.split('');
     let row = spletedID[0];
     let col = spletedID[1];
-
-
-    
         for (let i = 0; i < customArr.length; i++) {
             RowValues.push(customArr[row][i]);
         }
@@ -135,8 +166,6 @@ function valueOfRowCol(customArr,id){
             ColValues.push(customArr[i][col]);
         }
         //  console.log(ColValues);
-     
-
         splitArray(RowValues);
         splitArray(ColValues);
    
@@ -157,21 +186,11 @@ function splitArray(arr){
         }
     }
     if (temp.length != 0) result.push(temp);
-    
-    
-  
 
     for(let i = 0 ; i<result.length ;i++){
         subString(result[i],result[i].length)
         subString([...result[i]].reverse(),[...result[i]].reverse().length)
     }
-   
-    // 
-    // for(let i = 0 ; i<result.length ;i++){
-    //   
-    // }
-    // findWord(result[0]);
-    // findWord([...result[0]].reverse());
      
 }
 
@@ -183,9 +202,9 @@ function subString(str,n)
             for(let j = i+1;j <= n-1;j++){
                 outputArray[++c] = new Array(j-i+1);
                 var c2 = -1;
-                for(let k = i;k <= j;k++){
-                    outputArray[c][++c2] = str[k];
-                }
+                    for(let k = i;k <= j;k++){
+                        outputArray[c][++c2] = str[k];
+                    }
             }
         }
         // console.log(outputArray);
@@ -218,8 +237,6 @@ function findWord( letters ) {
         
     }
     
-    // console.log(word.trim());
-    // console.log(`word length ${word.trim().length}`);  
     if(word.trim().length == 0){
         word = '';
     }
@@ -262,13 +279,65 @@ function findWord( letters ) {
   
     // console.log(status);
 
-    console.log(`used word ${UsedWord}`);
+    // console.log(`used word ${UsedWord}`);
 
     POUWord.innerHTML = powords;
     PTUWord.innerHTML = ptwords;
    
 
 }
+
+
+
+function quitFunc(){
+    if(keyPressNumber%2 == 1){
+        alert(`Second Player Quit \n🎉🏆🎉First Player Won 🎉🏆🎉 \n Score : ${p2score}`) 
+        location.reload();
+    }
+    else{
+        alert(`First Player Quit \n🎉🏆🎉Second Player Won 🎉🏆🎉 \n Score : ${p1score} `)  
+        location.reload(); 
+    }
+}
+
+
+
+
+function exitFunc(){
+    if (confirm("Both Player Want to Exit?") == true) {
+        if(keyPressNumber%2 == 1 && p2score > p1score){
+            alert(`🎉🏆🎉First Player Won 🎉🏆🎉 \n Score : ${p2score}`)  
+            location.reload(); 
+        }
+        else{
+            if (p1score == p2score)
+            {
+                alert(`🎉🏆🎉Draw 🎉🏆🎉 \n Score : p1 =  ${p2score} p2 = ${p1score}`) 
+                location.reload();
+            }
+            else{
+                alert(`🎉🏆🎉Second Player Won 🎉🏆🎉 \n Score : ${p1score} `) 
+                location.reload();
+            }
+        }
+        window.location = "../index.html"
+      } 
+   
+}
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
 
 
 
