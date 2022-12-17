@@ -73,15 +73,10 @@ table.onkeyup = (e)=>{
                
             }
             else{
-                
-               
                 player1Array.push(charCode);
                 keyPressNumber++;
-                
                 element.blur();
                 element.disabled=true;
-
-               
             }
        }
        else{
@@ -98,8 +93,6 @@ table.onkeyup = (e)=>{
                 element.blur();
                 element.disabled=true;
                 
-               
-               
             }
        }
 
@@ -290,6 +283,7 @@ function findWord( letters ) {
 
 
 function quitFunc(){
+    clearTimeout(timeLimit)
     if(keyPressNumber%2 == 1){
         alert(`Second Player Quit \n🎉🏆🎉First Player Won 🎉🏆🎉 \n Score : ${p2score}`) 
         location.reload();
@@ -304,6 +298,7 @@ function quitFunc(){
 
 
 function exitFunc(){
+    clearTimeout(timeLimit)
     if (confirm("Both Player Want to Exit?") == true) {
         if(keyPressNumber%2 == 1 && p2score > p1score){
             alert(`🎉🏆🎉First Player Won 🎉🏆🎉 \n Score : ${p2score}`)  
