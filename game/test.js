@@ -1,7 +1,7 @@
 
 // music
 
-var longPop = new Audio("./longPop.wav");
+var longPop = new Audio("./longpop.wav");
 var onLoad = new Audio("./onload.wav");
 var reward = new Audio("./reward.wav");
 var wrong = new Audio("./wrong.wav");
@@ -55,12 +55,12 @@ table.onkeydown = (e) => {
     clearInterval(playerInterval);
     longPop.play();
     longPop.volume = 0.5;
-
 }
 
 
 table.onkeyup = (e) => {
     console.log('keyup')
+   
 
     let element = document.getElementById(e.target.id)
     let letter = e.target.value;
