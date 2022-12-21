@@ -59,21 +59,26 @@ table.onkeydown = (e) => {
 
 
 table.onkeyup = (e) => {
-    console.log('keyup')
+    // console.log('keyup')
    
 
     let element = document.getElementById(e.target.id)
     let letter = e.target.value;
     let charCode = letter.charCodeAt(letter[letter.length - 1]);
 
+    console.log(charCode)
 
-    if (charCode > 31 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122)) {
+
+    if (charCode > 31 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122) || isNaN(charCode)) {
         wrong.play();
         wrong.volume = 0.5;
         alert("Enter letters only.");
         element.value = element.defaultValue;
+       
 
-    } else {
+    }
+  
+     else {
         // clearTimeout(timeLimit)
         clearInterval(playerInterval);
 
